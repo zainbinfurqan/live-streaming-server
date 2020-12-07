@@ -114,11 +114,11 @@ const server = app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
 });
 
-// global.connection = socket(server);
-global.nsp = socket(server);
+global.connection = socket(server);
+// global.nsp = socket(server);
 // console.log("connection", connection)
 
-// global.nsp = connection.of("/socketio");
+global.nsp = connection.of("/video");
 // console.log("nsp", nsp.on)
 
 //chat function  currently working 
