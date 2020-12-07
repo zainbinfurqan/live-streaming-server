@@ -120,6 +120,7 @@ global.nsp = connection.of("/socketio");
 
 //chat function  currently working 
 nsp.on("connection", function (s) {
+    console.log("socketio")
 
     s.on("room-join", socketData => {
         const user = { id: s.id, userName: socketData.userId, room: "jjskaenhffoaweanslaner" }
