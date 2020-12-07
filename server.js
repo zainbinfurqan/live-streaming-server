@@ -118,7 +118,7 @@ global.connection = socket(server);
 // global.nsp = socket(server);
 // console.log("connection", connection)
 
-global.nsp = connection.of("/video-stream");
+global.nsp = connection.of("/videostream");
 // console.log("nsp", nsp.on)
 // Socket setup
 // const io = socket(server);
