@@ -128,7 +128,7 @@ global.nsp = connection.of("/videostream");
 // });
 // chat function  currently working
 
-nsp.on("connection", function (s) {
+nsp.on("connect", function (s) {
     console.log("socketio")
 
     s.on("room-join", socketData => {
