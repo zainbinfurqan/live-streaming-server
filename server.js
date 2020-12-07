@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const fs = require('fs');
 const { exec } = require('child_process');
+const socket = require("socket.io");
 
 const app = express();
 
@@ -105,6 +106,42 @@ router.get('/video', (req, res) => {
 app.use(router);
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+// app.listen(PORT, () => {
+//     console.log(`Server listening on port ${PORT}`);
+// });
+
+const server = app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
+});
+
+global.connection = socket(server);
+
+global.nsp = connection.of("/socketio");
+
+//chat function  currently working 
+nsp.on("connection", function (s) {
+
+    s.on("room-join", socketData => {
+        const user = { id: s.id, userName: socketData.userId, room: "jjskaenhffoaweanslaner" }
+        connectedUsers.push(user);
+        s.join(user.room);
+
+        s.on("host-video-action", async socketData => {
+            console.log("socketData", socketData)
+            // const user = connectedUsers.find(user => user.id === s.id);
+            // const payload = { userId: socketData.userId, message: socketData.message, roomId: socketData.roomId };
+            // const message = new chatSchema(payload);
+
+            // message.save();
+
+            // s.to(user.room).emit("new-message", socketData.message)
+        })
+        //-----------new
+    });
+
+    s.on("disconnect", function () {
+        // connectedUsers = connectedUsers.filter(item => item.socketId !== s.id);
+        s.leave(s.id);
+    });
+
 });
