@@ -121,37 +121,38 @@ global.connection = socket(server);
 global.nsp = connection.of("/video");
 // console.log("nsp", nsp.on)
 // Socket setup
-const io = socket(server);
+// const io = socket(server);
 
-io.on("connection", function (socket) {
-    console.log("Made socket connection");
-});
-//chat function  currently working
-
-// nsp.on("connection", function (s) {
-//     console.log("socketio")
-
-//     s.on("room-join", socketData => {
-//         const user = { id: s.id, userName: socketData.userId, room: "jjskaenhffoaweanslaner" }
-//         connectedUsers.push(user);
-//         s.join(user.room);
-
-//         s.on("host-video-action", async socketData => {
-//             console.log("socketData", socketData)
-//             // const user = connectedUsers.find(user => user.id === s.id);
-//             // const payload = { userId: socketData.userId, message: socketData.message, roomId: socketData.roomId };
-//             // const message = new chatSchema(payload);
-
-//             // message.save();
-
-//             // s.to(user.room).emit("new-message", socketData.message)
-//         })
-//         //-----------new
-//     });
-
-//     s.on("disconnect", function () {
-//         // connectedUsers = connectedUsers.filter(item => item.socketId !== s.id);
-//         s.leave(s.id);
-//     });
-
+// io.on("connection", function (socket) {
+//     console.log("Made socket connection");
 // });
+// chat function  currently working
+
+nsp.on("connection", function (s) {
+    console.log("socketio")
+
+    s.on("room-join", socketData => {
+        console.log("socketData", socketData)
+        const user = { id: s.id, userName: socketData.userId, room: "jjskaenhffoaweanslaner" }
+        connectedUsers.push(user);
+        s.join(user.room);
+        console.log("connectedUsers=room-join=>", connectedUsers)
+        s.on("host-video-action", async socketData => {
+            console.log("socketData", socketData)
+            // const user = connectedUsers.find(user => user.id === s.id);
+            // const payload = { userId: socketData.userId, message: socketData.message, roomId: socketData.roomId };
+            // const message = new chatSchema(payload);
+
+            // message.save();
+
+            // s.to(user.room).emit("new-message", socketData.message)
+        })
+        //-----------new
+    });
+
+    s.on("disconnect", function () {
+        // connectedUsers = connectedUsers.filter(item => item.socketId !== s.id);
+        s.leave(s.id);
+    });
+
+});
