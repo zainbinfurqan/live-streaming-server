@@ -128,7 +128,7 @@ global.connection = socket(server);
 // });
 // chat function  currently working
 
-nsp.on("connection", function (s) {
+global.connection.on("connection", function (s) {
     console.log("socketio")
 
     s.on("room-join", socketData => {
